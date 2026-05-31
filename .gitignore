@@ -1,9 +1,21 @@
+# Node
 node_modules/
+
+# Python
 venv/
 __pycache__/
 *.pyc
+
+# Local client environments and builds
+terminal-client/venv/
+terminal-client/build/
+terminal-client/dist/
+terminal-client/client.spec
+
+# Environment / local config
 .env
-dist/
-build/
+terminal-client/config.json
+
+# OS
 .DS_Store
 Thumbs.db
