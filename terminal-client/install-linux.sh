@@ -50,23 +50,27 @@ if [ -z "$SERVER_URL" ]; then
   SERVER_URL="ws://localhost:3000"
 fi
 
+export SERVER_URL
+
 echo "[+] Updating SERVER_URL inside client.py..."
-python3 - << PY
+python3 - << 'PY'
+import os
 from pathlib import Path
+
+server_url = os.environ["SERVER_URL"]
 
 path = Path("client.py")
 text = path.read_text(encoding="utf-8")
 
-lines = text.splitlines()
 new_lines = []
 
-for line in lines:
+for line in text.splitlines():
     if line.strip().startswith("SERVER_URL ="):
-        new_lines.append(f'SERVER_URL = "{SERVER_URL}"')
+        new_lines.append(f'SERVER_URL = "{server_url}"')
     else:
         new_lines.append(line)
 
-path.write_text("\\n".join(new_lines) + "\\n", encoding="utf-8")
+path.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
 PY
 
 echo "[+] Removing old virtual environment and build files..."
